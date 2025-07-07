@@ -9,6 +9,7 @@ import { MenuButton } from "@mui/base/MenuButton";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import { logout } from "../../redux/action/user";
+
 import {
   PiAlarm,
   PiBell,
@@ -46,6 +47,9 @@ const grey = {
   900: "#24292f",
 };
 
+
+
+
 const StyledListbox = styled("ul")(
   ({ theme }) => `
     font-family: 'Montserrat', sans-serif;
@@ -66,6 +70,7 @@ const StyledListbox = styled("ul")(
     z-index: 1;
     `
 );
+
 
 const StyledMenuItem = styled(MenuItem)(
   ({ theme }) => `
@@ -106,6 +111,7 @@ const Navbar = ({ setShowSidebar, showSidebar, open, setOpen }) => {
   /////////////////////////////////////////// STATES ////////////////////////////////////////////////
   const [date, setDate] = useState(new Date());
   const [openPasswordChange, setOpenPasswordChange] = useState(false);
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   /////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////
   useEffect(() => {
@@ -144,8 +150,10 @@ const Navbar = ({ setShowSidebar, showSidebar, open, setOpen }) => {
               <PiList className="text-[25px]" />
             </IconButton>
             <div>
-              <p className="text-sky-400 text-xl gap-1 flex items-center">
-                <PiTimerLight className="text-[25px]" /> {date.toLocaleTimeString()}
+              <p className="text-sky-400 text-base sm:text-lg md:text-xl gap-2 flex items-center flex-col sm:flex-row sm:items-center" style={{ minWidth: 0 }}>
+                <span className="flex items-center min-w-0 text-xs sm:text-sm" >
+                  <PiTimerLight className="text-[14px] sm:text-[18px]" /> {date.toLocaleTimeString()}
+                </span>
               </p>
             </div>
           </div>
@@ -271,7 +279,7 @@ const Navbar = ({ setShowSidebar, showSidebar, open, setOpen }) => {
                     <Avatar className="m-3 cursor-pointer capitalize ">
                       {loggedUser?.username[0]}
                     </Avatar>
-                    <span className="capitalize pr-3">{loggedUser?.username}</span>
+                    <span className="capitalize pr-3 hidden md:block">{loggedUser?.username}</span>
                   </Tooltip>
                 </MenuButton>
 

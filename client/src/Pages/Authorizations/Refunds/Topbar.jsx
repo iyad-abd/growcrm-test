@@ -25,6 +25,8 @@ const Topbar = ({ isFiltered, setIsFiltered }) => {
     setOpenFilters((pre) => !pre);
   };
 
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   return (
     <div className="flex flex-col ">
       <div className="w-full text-[14px]">
@@ -32,7 +34,10 @@ const Topbar = ({ isFiltered, setIsFiltered }) => {
       </div>
 
       <div className="sm:flex justify-between items-center flex-none">
-        <h1 className="text-primary-blue text-[32px] capitalize font-light">Refunds</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-primary-blue text-[32px] capitalize font-light">Refunds</h1>
+          <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 text-xs sm:text-sm md:text-base font-medium">{timeZone}</span>
+        </div>
 
         {showAddButton && (
           <div className="flex items-center justify-end gap-2 md:mt-0 mt-4">

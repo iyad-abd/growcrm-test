@@ -38,17 +38,25 @@ const CreateUser = ({ open, setOpen, scroll }) => {
 
   //////////////////////////////////////// STATES /////////////////////////////////////
   const [employeeData, setEmployeeData] = useState(initialEmployeeState);
+  const [validationError, setValidationError] = useState({});
 
   //////////////////////////////////////// USE EFFECTS /////////////////////////////////////
 
   //////////////////////////////////////// FUNCTIONS /////////////////////////////////////
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, username, password, phone, email } = employeeData
-    if (!firstName || !lastName || !username || !password || !phone  )
-      return alert("Make sure to provide all the fields")
+    const { firstName, lastName, username, password, phone } = employeeData;
+    let errors = {};
+    if (!firstName) errors.firstName = "First name is required";
+    if (!lastName) errors.lastName = "Last name is required";
+    if (!username) errors.username = "Username is required";
+    if (!password) errors.password = "Password is required";
+    if (!phone) errors.phone = "Phone is required";
+    setValidationError(errors);
+    if (Object.keys(errors).length > 0) return;
     dispatch(createEmployee(employeeData, setOpen));
-    setEmployeeData(initialEmployeeState)
+    setEmployeeData(initialEmployeeState);
+    setValidationError({});
   };
 
   const handleChange = (field, value) => {
@@ -93,6 +101,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
                     fullWidth
                     value={employeeData.firstName}
                     onChange={(e) => handleChange('firstName', e.target.value)}
+                    error={!!validationError.firstName}
+                    helperText={validationError.firstName}
                   />
                 </td>
               </tr>
@@ -104,6 +114,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
                     fullWidth
                     value={employeeData.lastName}
                     onChange={(e) => handleChange('lastName', e.target.value)}
+                    error={!!validationError.lastName}
+                    helperText={validationError.lastName}
                   />
                 </td>
               </tr>
@@ -115,6 +127,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
                     fullWidth
                     value={employeeData.username}
                     onChange={(e) => handleChange('username', e.target.value)}
+                    error={!!validationError.username}
+                    helperText={validationError.username}
                   />
                 </td>
               </tr>
@@ -139,6 +153,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
                     onChange={(e) => handleChange("password", e.target.value)}
                     size="small"
                     fullWidth
+                    error={!!validationError.password}
+                    helperText={validationError.password}
                   />
                 </td>
               </tr>
@@ -151,6 +167,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
                     value={employeeData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
                     fullWidth
+                    error={!!validationError.phone}
+                    helperText={validationError.phone}
                   />
                 </td>
               </tr>

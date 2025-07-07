@@ -15,6 +15,7 @@ const Topbar = ({ isFiltered, setIsFiltered }) => {
   const title = pathname.split("/")[1];
   const pathArr = pathname.split("/").filter((item) => item != "");
   const showAddButton = !pathArr.includes("create");
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   //////////////////////////////////////////// STATES //////////////////////////////////////////////////// 
   const [openFilters, setOpenFilters] = useState(false);
@@ -37,7 +38,10 @@ const Topbar = ({ isFiltered, setIsFiltered }) => {
       </div>
 
       <div className="sm:flex justify-between items-center flex-none">
-        <h1 className="text-primary-blue text-[32px] capitalize font-light">Approvals</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-primary-blue text-[32px] capitalize font-light">Approvals</h1>
+          <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 text-xs sm:text-sm md:text-base font-medium">{timeZone}</span>
+        </div>
 
         {showAddButton && (
           <div className="flex items-center justify-end gap-2 md:mt-0 mt-4">

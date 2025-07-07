@@ -16,6 +16,7 @@ const Topbar = (view, setView) => {
   const pathArr = pathname.split('/').filter(item => item != '');
   const showAddButton = !pathArr.includes('create');
   const descriptionElementRef = React.useRef(null);
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
     if (open) {
@@ -40,8 +41,11 @@ const Topbar = (view, setView) => {
         <Path />
       </div>
 
-      <div className='flex justify-between items-center '>
-        <h1 className='text-primary-blue text-[32px] capitalize'>{title}</h1>
+      <div className="flex justify-between flex-col sm:flex-row items-center mb-5">
+        <div className="flex items-center gap-3">
+          <h1 className="text-primary-blue text-[32px] capitalize font-light">{title}</h1>
+          <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 text-xs sm:text-sm md:text-base font-medium">{timeZone}</span>
+        </div>
 
 
         {showAddButton && (

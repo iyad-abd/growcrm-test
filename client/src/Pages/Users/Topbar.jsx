@@ -7,6 +7,7 @@ import { PiMagnifyingGlass } from "react-icons/pi";
 import { FiFilter } from "react-icons/fi";
 import CreateUser from "./CreateEmployee";
 import Filter from "./Filter";
+import CreateClient from "./CreateClient";
 import { searchUserReducer } from "../../redux/reducer/user";
 
 const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
@@ -21,11 +22,13 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
     ? `Create ${pathname.split("/")[1].slice(0, -1)}`
     : pathname.split("/")[1];
   const descriptionElementRef = useRef(null);
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   ///////////////////////////////////////// STATES ///////////////////////////////////////////////////
   const [open, setOpen] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
   const [scroll, setScroll] = useState("paper");
+  const [openClient, setOpenClient] = useState(false);
 
   ///////////////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////
   useEffect(() => {
@@ -50,14 +53,22 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
     setScroll(scrollType);
   };
 
+  const handleCreateClientOpen = (scrollType) => () => {
+    setOpenClient(true);
+    setScroll(scrollType);
+  };
+
   return (
     <div className="flex flex-col ">
       <div className="w-full text-[14px] ">
         <Path />
       </div>
 
-      <div className="flex justify-between items-center mb-5">
-        <h1 className="text-primary-blue text-[32px] capitalize font-light">{title}</h1>
+      <div className="flex justify-between items-center flex-col sm:flex-row mb-5">
+        <div className="flex items-center gap-3">
+          <h1 className="text-primary-blue text-[32px]  capitalize font-light">{title}</h1>
+          <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 text-xs sm:text-sm md:text-base font-medium">{timeZone}</span>
+        </div>
 
         {showEmployeeTopBar && (
           <div className="flex items-center gap-2">
@@ -120,6 +131,14 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
                 />
               </FormControl>
             </div>
+            <Tooltip title="Add New Client" placement="top" arrow>
+              <div onClick={handleCreateClientOpen("body")}> 
+                <button className="bg-primary-red hover:bg-red-400 transition-all text-white w-[44px] h-[44px] flex justify-center items-center rounded-full shadow-xl">
+                  <Add />
+                </button>
+              </div>
+            </Tooltip>
+            <CreateClient open={openClient} scroll={scroll} setOpen={setOpenClient} />
           </div>
         )}
       </div>

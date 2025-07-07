@@ -20,6 +20,7 @@ const Topbar = ({ options, setOptions, isFiltered, setIsFiltered, openFilters, s
   const pathArr = pathname.split("/").filter((item) => item != "");
   const showOptionButtons = !pathArr.includes("create");
   const dispatch = useDispatch();
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   ////////////////////////////////////////// STATES //////////////////////////////////////
   const [open, setOpen] = useState(false);
@@ -80,7 +81,12 @@ const Topbar = ({ options, setOptions, isFiltered, setIsFiltered, openFilters, s
       </div>
 
       <div className="md:flex justify-between items-center flex-none">
-        <h1 className="text-primary-blue text-[32px] capitalize font-light">{title}</h1>
+        <div className="flex justify-between items-center mb-5">
+          <div className="flex items-center gap-3">
+            <h1 className="text-primary-blue text-[32px] capitalize font-light">{title}</h1>
+            <span className="bg-gray-100 px-2 py-1 rounded text-gray-600 text-xs sm:text-sm md:text-base font-medium">{timeZone}</span>
+          </div>
+        </div>
 
         {showOptionButtons && (
           <div className="flex items-center justify-end gap-2 md:mt-0 mt-4">
